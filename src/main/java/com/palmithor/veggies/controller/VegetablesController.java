@@ -31,7 +31,7 @@ public class VegetablesController {
 
     @Autowired VegetablesRepository vegetablesRepository;
 
-    @RequestMapping(method = RequestMethod.GET, value = "/", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(method = RequestMethod.GET, value = "", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public List<Vegetable> getAll() {
         return vegetablesRepository
                 .findAll()
@@ -39,7 +39,7 @@ public class VegetablesController {
                 .collect(Collectors.toList());
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(method = RequestMethod.POST, value = "", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public Vegetable create(@Valid @RequestBody final VegetableRequest request) {
         return new Vegetable(
                 vegetablesRepository.save(new VegetableEntity(request.getName(), new BigDecimal(request.getPrice())))
