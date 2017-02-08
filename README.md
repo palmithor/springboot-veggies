@@ -2,6 +2,7 @@
 | :-------------: |:-------------:|
 | [![Build Status](https://travis-ci.org/palmithor/springboot-veggies.svg?branch=master)](https://travis-ci.org/palmithor/springboot-veggies)        | [![Build Status](https://travis-ci.org/palmithor/springboot-veggies.svg?branch=develop)](https://travis-ci.org/palmithor/springboot-veggies) |
 
+
 # springboot-veggies
 Small project for testing out Spring Boot JPA layer. It is a webservice which exposes few RESTful resources for getting information inventory status on vegetables.
 
