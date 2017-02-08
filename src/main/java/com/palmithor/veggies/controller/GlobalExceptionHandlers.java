@@ -5,11 +5,14 @@ import com.palmithor.veggies.model.ErrorModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -42,6 +45,15 @@ public class GlobalExceptionHandlers {
         return ResponseEntity
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(new ErrorModel("An unexpected error occurred"));
+    }
+
+    @ExceptionHandler(value = MethodArgumentNotValidException.class)
+    public ResponseEntity<ErrorModel> handleInvalidRequest( final MethodArgumentNotValidException e) {
+        List<FieldError> errors = e.getBindingResult().getFieldErrors();
+        FieldError fieldError = errors.iterator().next();
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(new ErrorModel(fieldError.getField() + " " + fieldError.getDefaultMessage()));
     }
 
     @ExceptionHandler(value = HttpMessageNotReadableException.class)

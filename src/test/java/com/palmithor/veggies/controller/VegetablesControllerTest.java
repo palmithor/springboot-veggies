@@ -166,6 +166,30 @@ public class VegetablesControllerTest {
                 .andExpect(content().string("{\"name\":\"name\",\"price\":10}"));
     }
 
+    @Test
+    public void testCreateNameMissing() throws Exception {
+        given(vegetablesRepository.save(any())).willReturn(dummyEntity());
+
+        mockMvc.perform(post("/api/v1/vegetables/")
+                .content(getDefaultGson().toJson(new VegetableRequest(null, 2.0)))
+                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .accept(MediaType.APPLICATION_JSON_UTF8_VALUE))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().string("{\"message\":\"name may not be null\"}"));
+    }
+
+    @Test
+    public void testCreatePriceMissing() throws Exception {
+        given(vegetablesRepository.save(any())).willReturn(dummyEntity());
+
+        mockMvc.perform(post("/api/v1/vegetables/")
+                .content(getDefaultGson().toJson(new VegetableRequest("name", null)))
+                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .accept(MediaType.APPLICATION_JSON_UTF8_VALUE))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().string("{\"message\":\"price may not be null\"}"));
+    }
+
     private VegetableEntity dummyEntity() {
         return new VegetableEntity("name", BigDecimal.TEN);
     }

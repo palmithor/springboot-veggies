@@ -11,6 +11,7 @@ import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import javax.validation.constraints.Digits;
 import java.math.BigDecimal;
 import java.util.List;
@@ -39,7 +40,7 @@ public class VegetablesController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public Vegetable create(@RequestBody final VegetableRequest request) {
+    public Vegetable create(@Valid @RequestBody final VegetableRequest request) {
         return new Vegetable(
                 vegetablesRepository.save(new VegetableEntity(request.getName(), new BigDecimal(request.getPrice())))
         );
